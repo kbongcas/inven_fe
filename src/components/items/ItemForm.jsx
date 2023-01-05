@@ -9,19 +9,29 @@ import ModalFooter from "../shared/Modal/ModalFooter";
 import {SFormControl, SFormLabel} from "../shared/Form/TextInput";
 
 const ItemForm = ({show, onHide, item}) => {
+
+    const initialState = {
+        image: 'default',
+        name:  '',
+        type: '',
+        notes: '',
+        weight: '',
+        cost: '',
+        count: 1,
+        description: '',
+    }
     
     const logo = ImageData.default;
     const [validated, setValidated] = useState(false);
     const [itemData, setItemData] = useState({
-        image: item ? item.image : 'default',
-        name:  item ? item.name: '',
-        type: item ? item.type : '',
-        notes: item ? item.notes : '',
-        weight: item ? item.weight : '',
-        cost: item ? item.cost :  '',
-        count: item ? item.count : 1,
-        description: item ? item.description : '',
-        containerId: null
+        image: item ? item.image : initialState.image,
+        name:  item ? item.name: initialState.name,
+        type: item ? item.type : initialState.type,
+        notes: item ? item.notes : initialState.notes,
+        weight: item ? item.weight : initialState.weight,
+        cost: item ? item.cost :  initialState.cost,
+        count: item ? item.count : initialState.count,
+        description: item ? item.description : initialState.description,
     })
 
     const dispatch = useDispatch();
@@ -44,10 +54,12 @@ const ItemForm = ({show, onHide, item}) => {
         else{
             dispatch(createItem(itemData));
         }
+        setItemData(initialState);
         onHide()
-    }
+}
 
     const handleCancel = () => {
+        setItemData(initialState);
         onHide();
     }
 

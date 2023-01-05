@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 import {deleteContainer} from "../../slices/containersSlice";
 import ContainerForm from "./ContainerForm";
 
-const ContainerCard = ({container}) => {
+const ContainerCard = ({container, setShowItemsInContainer, setSelectedContainer}) => {
     const logo = getImageFromItem('default')
     const [updateContainerModalShow, setUpdateContainerModalShow] = useState(false);
 
@@ -17,10 +17,17 @@ const ContainerCard = ({container}) => {
     const handleDeleteItem = () => {
         dispatch(deleteContainer(container.id))
     }
+
+    const handleViewContainer = () => {
+        setSelectedContainer(container);
+        setShowItemsInContainer(true);
+    }
     
     return(
         <div className="col-md-4 p-3">
-            <SCard>
+            <SCard
+                onDoubleClick={handleViewContainer}
+            >
                 <SCardHeader>
                     <h6 className="mb-0 fw-bold">{container.name}</h6>
                 </SCardHeader>

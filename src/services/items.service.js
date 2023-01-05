@@ -1,4 +1,4 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import {authService} from "./authentication.service";
 export const ITEM_API_URL = "http://localhost:3001/items";
@@ -56,8 +56,47 @@ const updateItem = async (itemId, item) => {
     );
 }
 
+const getAllItemsInContainer = async (containerId) => {
+    return axios.get(ITEM_API_URL + `/container/${containerId}`,
+        {
+            headers:{ 'Authorization': 'Bearer ' + authService.getLocalAccessToken()}
+        }
+    );
+}
+
+const addItemIntoContainer = async (itemId,containerId) => {
+    return axios.post(ITEM_API_URL + `/${itemId}/container/${containerId}`,
+        null,
+        {
+            headers:{ 'Authorization': 'Bearer ' + authService.getLocalAccessToken()}
+        }
+    );
+}
+
+
+const deleteItemFromContainer = async (itemId, containerId) => {
+    return axios.delete(ITEM_API_URL + `/${itemId}/container/${containerId}`,
+        {
+            headers:{ 'Authorization': 'Bearer ' + authService.getLocalAccessToken()}
+        }
+    );
+}
+
+const updateItemInContainer = async (itemId, containerId, item) => {
+    return axios.patch(ITEM_API_URL + `/${itemId}/container/${containerId}`,
+        item,
+        {
+            headers:{ 'Authorization': 'Bearer ' + authService.getLocalAccessToken()}
+        }
+    );
+}
+
 
 export const itemsService = {
+    updateItemInContainer,
+    deleteItemFromContainer,
+    addItemIntoContainer,
+    getAllItemsInContainer,
     updateItem,
     createItem,
     deleteItem,

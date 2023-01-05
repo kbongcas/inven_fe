@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import styled from "styled-components";
 import RegistrationForm from "../components/user/RegistrationForm";
 

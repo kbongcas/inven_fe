@@ -1,4 +1,4 @@
-﻿import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {itemsService} from "../services/items.service";
 
 const initialValue = {
@@ -28,7 +28,6 @@ export const updateItem = createAsyncThunk('items/updateItem', async ({itemId, i
     const response = await itemsService.updateItem(itemId, item)
     return response.data;
 })
-
 
 export const itemsSlice = createSlice({
     name: "items",

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import Sidebar from "./Sidebar";
 import styled from "styled-components";
 import {Outlet} from "react-router-dom";

@@ -1,6 +1,5 @@
-﻿import React from 'react';
-import {Navigate, Outlet} from "react-router-dom";
-import RegistrationPage from "../../pages/RegistrationPage";
+import React from 'react';
+import {Outlet} from "react-router-dom";
 import LoginPage from "../../pages/LoginPage";
 import {useSelector} from "react-redux";
 

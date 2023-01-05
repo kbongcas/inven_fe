@@ -1,4 +1,4 @@
-﻿export const ImageData = {
+export const ImageData = {
     default : require('../assets/circle.png'),
     battleAxe : require('../assets/battle-axe.png'),
     potion : require('../assets/round-potion.png'),

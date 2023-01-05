@@ -1,6 +1,5 @@
-﻿import React from 'react';
+import React from 'react';
 import styled from "styled-components";
-import {Container} from "react-bootstrap";
 import LoginForm from "../components/user/LoginForm";
 
 const LoginPage = () => {

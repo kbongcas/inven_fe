@@ -1,4 +1,4 @@
-﻿import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Col, Button, Row, Container, Card, Form, InputGroup, Spinner} from 'react-bootstrap';
 import {register, reset} from "../../slices/authSlice";
 import {useNavigate} from "react-router-dom";

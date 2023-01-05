@@ -47,13 +47,11 @@ export const containersSlice = createSlice({
             .addCase(getAllContainers.fulfilled, (state, action) =>{
                 state.isLoading = false;
                 state.containers = action.payload
-                console.log(action.payload)
                 if (!state.containers) state.containers = [];
             })
             .addCase(getAllContainers.rejected, (state, action) =>{
                 state.isLoading = false;
                 state.message = action.payload
-                console.log(action.payload)
             })
             .addCase(createContainer.pending, (state) =>{
                 state.isLoading = true;

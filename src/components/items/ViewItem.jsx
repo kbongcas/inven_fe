@@ -1,6 +1,6 @@
-﻿import styled from "styled-components";
+import styled from "styled-components";
 import {getImageFromItem} from "../../data/testdata";
-import {Container, Image, Modal, ModalFooter, ModalHeader} from "react-bootstrap";
+import {Container, Image, Modal, ModalHeader} from "react-bootstrap";
 
 const ViewItem = ({show, onHide, item}) => {
 

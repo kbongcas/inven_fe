@@ -6,7 +6,7 @@ import CardHeader from "react-bootstrap/CardHeader";
 import ContainerCard from "./ContainerCard";
 import {getAllContainers} from "../../slices/containersSlice";
 
-const ContainersContainer = () => {
+const ContainersContainer = ({setShowItemsInContainer, setSelectedContainer}) => {
     const { containers, isLoading } = useSelector( (state) => state.containers)
 
     const dispatch = useDispatch();
@@ -28,7 +28,14 @@ const ContainersContainer = () => {
             </SCardHeader>
             {isLoading ? <Spinner /> :
                 <div className="row m-2">
-                    { containers.map( (container, i) => <ContainerCard container={container} key={i}/>)
+                    { containers.map( (container, i) => 
+                        <ContainerCard 
+                            setShowItemsInContainer={setShowItemsInContainer} 
+                            setSelectedContainer={setSelectedContainer}
+                            setShowSe
+                            container={container} 
+                            key={i}
+                        />)
                     }
                 </div>
             }

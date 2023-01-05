@@ -8,11 +8,17 @@ import ModalFooter from "../shared/Modal/ModalFooter";
 import {createContainer, updateContainer} from "../../slices/containersSlice";
 
 const ContainerForm = ({show, onHide, container}) => {
+    
+    const initialContainerState = {
+        name: 'name',
+        description: 'description'
+    }
+    
     const logo = ImageData.battleAxe;
     const [validated, setValidated] = useState(false);
     const [containerData, setContainerData] = useState({
-        name: container ? container.name : 'name',
-        description: container ? container.description : 'description'
+        name: container ? container.name : initialContainerState.name,
+        description: container ? container.description : initialContainerState.description
     })
     const dispatch = useDispatch();
 
@@ -35,7 +41,8 @@ const ContainerForm = ({show, onHide, container}) => {
         else{
             dispatch(createContainer(containerData));
         }
-        onHide()
+        setContainerData(initialContainerState);
+        onHide();
     }
     
     const handleInputChange = (e) => {
@@ -50,6 +57,7 @@ const ContainerForm = ({show, onHide, container}) => {
     }
 
     const handleCancel = () => {
+        setContainerData(initialContainerState);
         onHide();
     }
     

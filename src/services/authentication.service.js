@@ -1,4 +1,4 @@
-﻿import axios, {isAxiosError} from "axios";
+import axios from "axios";
 
 const API_URL = "http://localhost:3001/auth/";
 
@@ -35,8 +35,15 @@ const login = async ({email, password}) => {
 }
 
 
-const logout = () => {
+const logout = async (userData) => {
+    const response = axios.post(API_URL + 'logout',
+        userData,
+        {
+            headers:{ 'Authorization': 'Bearer ' + authService.getLocalAccessToken()}
+        }
+    )
     localStorage.removeItem('user')
+    return response.data
 }
 
 const getLocalAccessToken = () =>  {

@@ -8,6 +8,10 @@ const ItemsPage = () => {
     
     const [addItemModalShow, setAddItemModalShow] = useState(false);
     
+    const handleHidoModal = () => {
+        setAddItemModalShow(false)
+    }
+    
     return(
         <ItemsPageContainer>
             <Container className="my-5">
@@ -29,7 +33,7 @@ const ItemsPage = () => {
                     <ItemsTable />
                 </ContentContainer>
             </Container>
-            <ItemForm show={addItemModalShow} onHide={() => setAddItemModalShow(false)}/>
+            <ItemForm show={addItemModalShow} onHide={() => setAddItemModalShow(false)} item={null}/>
         </ItemsPageContainer> 
     )
 }
