@@ -4,7 +4,7 @@ import { authService } from "../services/authentication.service";
 const  user = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
-    user: user? user : null,
+    user: authService.isLocalRefreshTokenExpired() ? null : user,
     isError: false,
     isSuccess: false,
     isLoading: false,

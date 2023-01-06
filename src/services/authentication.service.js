@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode"
 
 const API_URL = "http://localhost:3001/auth/";
 
@@ -57,7 +58,17 @@ const getLocalRefreshToken = () => {
 }
 
 
+const isLocalRefreshTokenExpired = () => {
+    const refreshToken = getLocalRefreshToken()
+    if(!refreshToken) return true;
+    const decodedJwt = jwtDecode(refreshToken);
+    console.log(decodedJwt)
+    const currentTime = Date.now() / 1000;
+    return currentTime > decodedJwt.exp;
+}
+
 export const authService = {
+    isLocalRefreshTokenExpired,
     getRefreshTokenEndpoint,
     getLocalAccessToken,
     getLocalRefreshToken,
