@@ -1,18 +1,16 @@
 ﻿import React, {useEffect, useState} from 'react';
 import {
     Button,
-    Form,
-    InputGroup,
-    ListGroup,
     Image,
-    Modal, ModalHeader
 } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllItems} from "../../slices/itemsSlice";
 import styled from "styled-components";
 import {getImageFromItem} from "../../data/testdata";
-import {AiOutlineSearch} from "react-icons/ai";
 import {addItemIntoContainer} from "../../slices/itemsInContainerSlice";
+import SearchModal from "../shared/Modal/SearchModal";
+import ModalSearchResult from "../shared/Modal/ModalSearchResult";
+import {searchFilter} from "../../utils/searchFilter";
 
 const AddItemSearchBar = ({show, hide, container}) => {
 
@@ -25,15 +23,15 @@ const AddItemSearchBar = ({show, hide, container}) => {
 
     useEffect( () => {
         if(show) {
+            setSearchInput("")
+            setFilteredItems([])
             dispatch(getAllItems())
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show])
     
     const performFilter = (input) => {
-        const filteredData = input === "" ? 
-            [] : 
-            items.filter( item => item.name.toLowerCase().includes(input.toLowerCase()));
+        const filteredData = searchFilter.performFilter(input, items, "name")
         setSearchInput(input)
         setFilteredItems(filteredData);
         setShowFilteredDropdown(filteredData.length > 0)
@@ -53,13 +51,20 @@ const AddItemSearchBar = ({show, hide, container}) => {
         hide()
     }
 
+    const renderPrompt = () => {
+        return (
+            <div className="d-flex flex-row">
+                <p>Add item to &nbsp;</p><p className="fw-bold">{container.name}</p>
+            </div>
+        )
+    }
+
     const FilteredItemRow = ({item}) =>
     {
         const logo = getImageFromItem(item)
         
         return(
-            <SButton
-                className="list-group-item list-group-item-action"
+            <ModalSearchResult
                 onClick={() => handleFilteredItemClicked(item.id, container.id)}
             >
                 <div className="row">
@@ -75,79 +80,29 @@ const AddItemSearchBar = ({show, hide, container}) => {
                         <ItemType className="text-muted mb-auto">{item.type}</ItemType>
                     </div>
                 </div>
-            </SButton>
+            </ModalSearchResult>
         )
     }
     
     return container && (
-        <SModal
-            centered
+
+        <SearchModal
             show={show}
             onHide={hide}
+            renderPrompt={renderPrompt}
+            searchInput={searchInput}
+            searchPlaceholder="Search Item to add"
+            handleFilter={handleFilter}
         >
-            <ModalHeader>
-                {container.name}
-            </ModalHeader>
-            <SearchContainer>
-                <SInputGroup>
-                    <SFormControl
-                        type="text"
-                        value={searchInput}
-                        placeholder="Search for item to add"
-                        onChange={handleFilter}
-                        autoFocus
-                    />
-                    <InputGroup.Text>
-                        <AiOutlineSearch />
-                    </InputGroup.Text>
-                </SInputGroup>
-                <SListGroup>
                     { showFilteredDropdown
                         &&  filteredItems.map( (item, i) => <FilteredItemRow item={item} key={i}/>
                         )
                     }
-                </SListGroup>
-    </SearchContainer>
-</SModal>
+        </SearchModal>
 )
 
 };
 
-const SModal = styled(Modal)`
-  overflow: hidden;
-  white-space: nowrap;
-`
-
-const SInputGroup = styled(InputGroup)`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 400px;
-`
-
-const SFormControl = styled(Form.Control)`
-  flex-direction: row;
-  width: 100%;
-`
-
-const SearchContainer = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-`
-
-const SListGroup = styled(ListGroup)`
-  position: absolute;
-  top: 55px;
-`
-
-const SButton = styled(Button)`
-    width: 400px;
-    height: 60px;
-`
 
 const StyledImage = styled(Image)`
   width: 30px;

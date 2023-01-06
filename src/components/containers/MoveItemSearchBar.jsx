@@ -1,17 +1,14 @@
 ﻿import React, {useEffect, useState} from 'react';
 import {
-    Button,
-    Form,
-    InputGroup,
-    ListGroup,
     Image,
-    Modal, ModalHeader, ModalBody
 } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import {AiOutlineSearch} from "react-icons/ai";
-import {addItemIntoContainer, moveItemInContainer} from "../../slices/itemsInContainerSlice";
+import {moveItemInContainer} from "../../slices/itemsInContainerSlice";
 import {getAllContainers} from "../../slices/containersSlice";
+import SearchModal from "../shared/Modal/SearchModal";
+import {searchFilter} from "../../utils/searchFilter";
+import ModalSearchResult from "../shared/Modal/ModalSearchResult";
 
 const MoveItemSearchBar = ({show, hide, item}) => {
 
@@ -24,17 +21,15 @@ const MoveItemSearchBar = ({show, hide, item}) => {
     
     useEffect( () => {
         if(show) {
+            setSearchInput("")
+            setFilteredContainers([])
             dispatch(getAllContainers())
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show])
 
     const performFilter = (input) => {
-        const filteredData = input === "" ?
-            [] :
-            containers.filter( container => container.name.toLowerCase().includes(input.toLowerCase())
-                && container.id !== item.containerId
-            );
+        const filteredData = searchFilter.performFilterWithIgnore(input, containers, "name", "id", item.containerId)
         setSearchInput(input)
         setFilteredContainers(filteredData);
         setShowFilteredDropdown(filteredData.length > 0)
@@ -54,13 +49,20 @@ const MoveItemSearchBar = ({show, hide, item}) => {
         hide()
     }
 
+    const renderPrompt = () => {
+        return (
+            <div className="d-flex flex-row">
+                <p>Moving&nbsp;</p><p className="fw-bold">{item.name}</p><p>&nbsp; into...</p>
+            </div>
+        )
+    }
+
     const FilteredContainerRow = ({container}) =>
     {
         const logo = ImageData.default;
 
         return(
-            <SButton
-                className="list-group-item list-group-item-action"
+            <ModalSearchResult
                 onClick={() => handleFilteredContainersClicked(container.id)}
             >
                 <div className="row">
@@ -76,91 +78,28 @@ const MoveItemSearchBar = ({show, hide, item}) => {
                         <ItemType className="text-muted mb-auto">{container.description}</ItemType>
                     </div>
                 </div>
-            </SButton>
+            </ModalSearchResult>
         )
     }
 
-    
+
     return item && (
-        <SModal
-            centered
+        <SearchModal
             show={show}
             onHide={hide}
+            renderPrompt={renderPrompt}
+            searchInput={searchInput}
+            searchPlaceholder="Search Container"
+            handleFilter={handleFilter}
         >
-            <ModalHeader>
-            </ModalHeader>
-            <SModalBody>
-                <div className="d-flex flex-row">
-                    <p>Moving&nbsp;</p><p className="fw-bold">{item.name}</p><p>&nbsp; into...</p>
-                </div>
-            <SearchContainer>
-                <SInputGroup>
-                    <SFormControl
-                        type="text"
-                        value={searchInput}
-                        placeholder="Search for item to add"
-                        onChange={handleFilter}
-                        autoFocus
-                    />
-                    <InputGroup.Text>
-                        <AiOutlineSearch />
-                    </InputGroup.Text>
-                </SInputGroup>
-                <SListGroup>
-                    { showFilteredDropdown
-                        &&  filteredContainers.map( (container, i) => <FilteredContainerRow container={container} key={i}/>
-                        )
-                    }
-                </SListGroup>
-            </SearchContainer>
-            </SModalBody>
-        </SModal>
+            { showFilteredDropdown
+                &&  filteredContainers.map( (container, i) => <FilteredContainerRow container={container} key={i}/>
+                )
+            }
+        </SearchModal>
     )
-
 };
 
-
-const SModalBody = styled(ModalBody)`
-  background-color: var(--bg-1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-const SModal = styled(Modal)`
-  overflow: hidden;
-  white-space: nowrap;
-`
-
-const SInputGroup = styled(InputGroup)`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 400px;
-`
-
-const SFormControl = styled(Form.Control)`
-  flex-direction: row;
-  width: 100%;
-`
-
-const SearchContainer = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-`
-
-const SListGroup = styled(ListGroup)`
-  position: absolute;
-  top: 55px;
-`
-
-const SButton = styled(Button)`
-    width: 400px;
-    height: 60px;
-`
 
 const StyledImage = styled(Image)`
   width: 30px;

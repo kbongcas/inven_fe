@@ -6,6 +6,7 @@ import {SFormControl, SFormLabel} from "../shared/Form/TextInput";
 import ModalHeader from "../shared/Modal/ModalHeader";
 import ModalFooter from "../shared/Modal/ModalFooter";
 import {createContainer, updateContainer} from "../../slices/containersSlice";
+import FormModal from "../shared/Modal/FormModal";
 
 const ContainerForm = ({show, onHide, container}) => {
     
@@ -62,10 +63,9 @@ const ContainerForm = ({show, onHide, container}) => {
     }
     
     return (
-        <Modal
+        <FormModal
             show={show}
             onHide={onHide}
-            size="lg"
         >
             <ModalHeader>
                 {container ? 'Update Contianer' : 'Create Container'}
@@ -126,7 +126,7 @@ const ContainerForm = ({show, onHide, container}) => {
                     {container ? 'Update' : 'Create'}
                 </button>
             </ModalFooter>
-        </Modal>
+        </FormModal>
     );
 };
 

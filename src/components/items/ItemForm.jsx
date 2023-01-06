@@ -7,6 +7,7 @@ import {createItem, updateItem} from "../../slices/itemsSlice";
 import ModalHeader from "../shared/Modal/ModalHeader";
 import ModalFooter from "../shared/Modal/ModalFooter";
 import {SFormControl, SFormLabel} from "../shared/Form/TextInput";
+import FormModal from "../shared/Modal/FormModal";
 
 const ItemForm = ({show, onHide, item}) => {
 
@@ -75,10 +76,9 @@ const ItemForm = ({show, onHide, item}) => {
     }
 
     return (
-        <Modal
+        <FormModal
             show={show}
             onHide={onHide}
-            size="lg"
         >
             <ModalHeader>{item ? 'Update Item' : 'Create Item'}</ModalHeader>
             <StyledForm
@@ -196,7 +196,7 @@ const ItemForm = ({show, onHide, item}) => {
                     {item ? 'Update' : 'Create'}
                 </button>
             </ModalFooter>
-        </Modal>
+        </FormModal>
     );
 };
 

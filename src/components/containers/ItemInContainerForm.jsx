@@ -1,12 +1,13 @@
 ﻿import React, {useState} from 'react';
 import styled from "styled-components";
 import {ImageData} from "../../data/testdata";
-import {Form, FormControl, FormGroup, Image, InputGroup, Modal} from "react-bootstrap";
+import {Form, FormControl, FormGroup, Image, InputGroup} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import ModalHeader from "../shared/Modal/ModalHeader";
 import ModalFooter from "../shared/Modal/ModalFooter";
 import {SFormControl, SFormLabel} from "../shared/Form/TextInput";
 import {updateItemInContainer} from "../../slices/itemsInContainerSlice";
+import FormModal from "../shared/Modal/FormModal";
 
 const ItemInContainerForm = ({show, onHide, item}) => {
 
@@ -47,10 +48,9 @@ const ItemInContainerForm = ({show, onHide, item}) => {
     }
 
     return (
-        <Modal
+        <FormModal
             show={show}
             onHide={onHide}
-            size="lg"
         >
             <ModalHeader>{item ? 'Update Item' : 'Create Item'}</ModalHeader>
             <StyledForm
@@ -168,7 +168,7 @@ const ItemInContainerForm = ({show, onHide, item}) => {
                     {item ? 'Update' : 'Create'}
                 </button>
             </ModalFooter>
-        </Modal>
+        </FormModal>
     );
 };
 
