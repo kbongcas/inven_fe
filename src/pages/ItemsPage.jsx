@@ -3,59 +3,56 @@ import {Button, Container, Dropdown} from "react-bootstrap";
 import styled from "styled-components";
 import ItemForm from "../components/items/ItemForm";
 import ItemsTable from "../components/items/ItemsTable";
+import SearchBar from "../components/shared/Form/SearchBar";
+import PageContainer from "../components/shared/Container/PageContainer";
+import SButton from "../components/shared/Button/SButton";
 
 const ItemsPage = () => {
     
     const [addItemModalShow, setAddItemModalShow] = useState(false);
     
-    const handleHidoModal = () => {
-        setAddItemModalShow(false)
-    }
-    
     return(
-        <ItemsPageContainer>
+        <PageContainer>
             <Container className="my-5">
-                <ActionsContainer>
-                    <Button variant="primary" onClick={() => setAddItemModalShow(true)}>Create Item</Button>
-                    <StyledDropdown>
-                        <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
-                            Container
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Tommie's Bag</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Erkan's Bag</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Anthony's Bag</Dropdown.Item>
-                            <Dropdown.Item href="#/action-1">Eric's Bag</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </StyledDropdown>
-                </ActionsContainer>
+                <HeaderContainer>
+                    <HeaderSectionContainer>
+                        <SButton
+                            className="btn-sm"
+                            onClick={() => setAddItemModalShow(true)}>
+                            New Item
+                        </SButton>
+                    </HeaderSectionContainer>
+                    <HeaderSectionContainer>
+                        <SearchBar />
+                    </HeaderSectionContainer>
+                    <HeaderSectionContainer>
+                        {"Total Items: 100"}
+                    </HeaderSectionContainer>
+                </HeaderContainer>
                 <ContentContainer>
                     <ItemsTable />
                 </ContentContainer>
             </Container>
             <ItemForm show={addItemModalShow} onHide={() => setAddItemModalShow(false)} item={null}/>
-        </ItemsPageContainer> 
+        </PageContainer> 
     )
 }
 
-const StyledDropdown = styled(Dropdown)`
-    margin-right: 5px;
-`
-const ContentContainer = styled.div`
-  overflow: hidden;
-  border-radius: 10px;
-`
-
-const ActionsContainer = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
   margin-bottom: 10px;
+  gap: 15px;
+  height: 50px;
 `
 
+const HeaderSectionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
 
-const ItemsPageContainer = styled.div`
-  background-color: var(--bg-1);
-  width: 100%;
+const ContentContainer = styled.div`
 `
 
 export default ItemsPage;

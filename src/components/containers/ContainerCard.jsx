@@ -28,9 +28,6 @@ const ContainerCard = ({container, setShowItemsInContainer, setSelectedContainer
             <SCard
                 onDoubleClick={handleViewContainer}
             >
-                <SCardHeader>
-                    <h6 className="mb-0 fw-bold">{container.name}</h6>
-                </SCardHeader>
                 <div className="card-body overflow-hidden">
                     <div className="d-flex flex-row mb-2">
                         <StyledImage
@@ -63,13 +60,9 @@ const ContainerCard = ({container, setShowItemsInContainer, setSelectedContainer
 };
 
 const SCard = styled(Card)`
-    height: 250px;
-`
-
-
-const SCardHeader = styled(CardHeader)`
-  overflow: hidden;
-  background-color: var(--bg-2);
+  height: 150px;
+  background-color: var(--bg-1-1);
+  border-width: 2px;
 `
 
 const SCardFooter = styled(Card)`

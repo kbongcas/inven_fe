@@ -6,6 +6,8 @@ import ContainersContainer from "../components/containers/ContianersContainer";
 import ItemsContainerTable from "../components/containers/ItemsContainerTable";
 import AddItemSearchBar from "../components/containers/AddItemSearchBar";
 import MoveItemSearchBar from "../components/containers/MoveItemSearchBar";
+import PageContainer from "../components/shared/Container/PageContainer";
+import SButton from "../components/shared/Button/SButton";
 
 
 
@@ -17,32 +19,29 @@ const ContainersPage = () => {
     const [selectedContainer, setSelectedContainer] = useState(null);
 
     return (
-        <ContainerPageContainer>
+        <PageContainer>
             <Container className="my-5">
                 <HeaderContainer>
                     <NavigationContainer>
                         { showItemsInContainer && 
-                            <Button 
-                                variant="primary" 
+                            <SButton 
                                 onClick={() => setShowItemsInContainer(false)}> 
                                 {'<'}
-                            </Button>
+                            </SButton>
                         }
                     </NavigationContainer>
                     <ActionsContainer>
                         { showItemsInContainer &&  
-                            <Button 
-                                variant="primary" 
+                            <SButton 
                                 onClick={() => setAddItemInContainerModalShow(true)} >
                                 Add Item
-                            </Button>
+                            </SButton>
                         }
                         { !showItemsInContainer &&
-                            <Button
-                                variant="primary"
+                            <SButton
                                 onClick={() => setCreateContainerModalShow(true)}>
-                                Create Container
-                            </Button>
+                                Create
+                            </SButton>
                         }
                     </ActionsContainer>
                 </HeaderContainer>
@@ -62,7 +61,7 @@ const ContainersPage = () => {
                 hide={() => setAddItemInContainerModalShow(false)} 
                 container={selectedContainer}
             />
-        </ContainerPageContainer>
+        </PageContainer>
     );
 };
 
@@ -78,17 +77,10 @@ const ActionsContainer = styled.div`
   margin-left: auto;
   gap: 10px;
 `
-
-const TitleContainer = styled.div`
-`
-
 const NavigationContainer = styled.div`
     margin-right: auto;
 `
 
-const SearchBarContainer = styled.div`
-    margin-left: auto;
-`
 const ContentContainer = styled.div`
   overflow: hidden;
   border-radius: 10px;

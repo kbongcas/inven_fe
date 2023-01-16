@@ -96,11 +96,12 @@ const Sidebar = () => {
 }
 
 const SideBarContainer = styled.div`
-  min-width: 200px;
+  flex: 0 0 200px;
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--bg-2)
+  background: var(--bg-2);
+  color: var(--bg-1);
 `
 const SidebarNavButton = styled.button`
   color: inherit;

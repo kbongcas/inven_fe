@@ -5,6 +5,7 @@ import styled from "styled-components";
 import CardHeader from "react-bootstrap/CardHeader";
 import ContainerCard from "./ContainerCard";
 import {getAllContainers} from "../../slices/containersSlice";
+import CardContainer from "../shared/Container/CardContainer";
 
 const ContainersContainer = ({setShowItemsInContainer, setSelectedContainer}) => {
     const { containers, isLoading } = useSelector( (state) => state.containers)
@@ -22,10 +23,7 @@ const ContainersContainer = ({setShowItemsInContainer, setSelectedContainer}) =>
     }, [isLoading, dispatch])
 
     return (
-        <Card>
-            <SCardHeader>
-                <h6 className="mb-0 fw-bold">Containers</h6>
-            </SCardHeader>
+        <CardContainer name="Containers">
             {isLoading ? <Spinner /> :
                 <div className="row m-2">
                     { containers.map( (container, i) => 
@@ -39,7 +37,7 @@ const ContainersContainer = ({setShowItemsInContainer, setSelectedContainer}) =>
                     }
                 </div>
             }
-        </Card>
+        </CardContainer>
     );
 };
 

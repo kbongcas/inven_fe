@@ -8,6 +8,7 @@ import ModalHeader from "../shared/Modal/ModalHeader";
 import ModalFooter from "../shared/Modal/ModalFooter";
 import {SFormControl, SFormLabel} from "../shared/Form/TextInput";
 import FormModal from "../shared/Modal/FormModal";
+import bg from '../../assets/paperTexture.webp';
 
 const ItemForm = ({show, onHide, item}) => {
 
@@ -81,106 +82,120 @@ const ItemForm = ({show, onHide, item}) => {
             onHide={onHide}
         >
             <ModalHeader>{item ? 'Update Item' : 'Create Item'}</ModalHeader>
-            <StyledForm
-                noValidate
-                validated={validated}
-                id="itemCreateForm"
-                onSubmit={handleSubmit}
-            >
-                <div className="row">
-                    <div className="col-4">
-                        <StyledImageContainer>
-                            <StyledImage
-                                src={logo}
-                                alt=""
-                                className="img-responsive rounded-circle"
-                            />
-                            <FormControl className="form-control-sm" type="file" />
-                        </StyledImageContainer>
-                        <div>
-                            <InputLabel className="form-label">Weight:</InputLabel>
-                            <InputField
-                                type="text"
-                                className="form-control"
-                                name="weight"
-                                id="weight"
-                                value={itemData.weight}
-                                onChange={handleInputChange}
-                            />
-                            <InputLabel className="form-label">Cost:</InputLabel>
-                            <InputField
-                                type="text"
-                                className="form-control"
-                                name="cost"
-                                id="cost"
-                                value={itemData.cost}
-                                onChange={handleInputChange}
-                            />
-                            <InputLabel className="form-label">Count:</InputLabel>
-                            <InputField
-                                type="number"
-                                className="form-control"
-                                name="count"
-                                id="count"
-                                value={itemData.count}
-                                onChange={handleInputChange}
-                            />
+            <FormContainer>
+                <StyledForm
+                    noValidate
+                    validated={validated}
+                    id="itemCreateForm"
+                    onSubmit={handleSubmit}
+                >
+                    <div className="row">
+                        <div className="col-4">
+                            <StyledImageContainer>
+                                <StyledImage
+                                    src={logo}
+                                    alt=""
+                                    className="img-responsive rounded-circle"
+                                />
+                                <FormControl className="form-control-sm" type="file" />
+                            </StyledImageContainer>
+                            <div className="form-group row">
+                                <InputLabel className="col-sm-2 form-label" for="weight">Weight:</InputLabel>
+                                <div className="col-sm-10">
+                                    <InputField
+                                        type="text"
+                                        className="form-control"
+                                        name="weight"
+                                        id="weight"
+                                        value={itemData.weight}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <InputLabel className="col-sm-2 form-label" for="cost">Cost:</InputLabel>
+                                <div className="col-sm-10">
+                                    <InputField
+                                        type="text"
+                                        className="form-control"
+                                        name="cost"
+                                        id="cost"
+                                        value={itemData.cost}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-group row">
+                                <InputLabel className="col-sm-2 form-label">Count:</InputLabel>
+                                <div className="col-sm-10">
+                                    <InputField
+                                        type="number"
+                                        className="form-control"
+                                        name="count"
+                                        id="count"
+                                        value={itemData.count}
+                                        onChange={handleInputChange}
+                                    />
+
+                                </div>
+                            </div>
                         </div>
+                        <FormGroup className="col d-flex flex-column">
+                            <InputLabel>Name</InputLabel>
+                            <InputGroup hasValidation>
+                                <SFormControl
+                                    required
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    value={itemData.name}
+                                    onChange={handleInputChange}
+                                />
+                                <FormControl.Feedback tooltip>Must not be empty</FormControl.Feedback>
+                            </InputGroup>
+                            <InputLabel>Type</InputLabel>
+                            <InputGroup hasValidation>
+                                <SFormControl
+                                    required
+                                    type="text"
+                                    name="type"
+                                    id="type"
+                                    value={itemData.type}
+                                    onChange={handleInputChange}
+                                />
+                            </InputGroup>
+                            <InputLabel>Notes</InputLabel>
+                            <InputGroup className="flex-grow-1">
+                                <NotesInputTextArea
+                                    className="form-control"
+                                    as="textarea"
+                                    name="notes"
+                                    id="notes"
+                                    value={itemData.notes}
+                                    onChange={handleInputChange}
+                                />
+                            </InputGroup>
+                        </FormGroup>
                     </div>
-                    <FormGroup className="col d-flex flex-column">
-                        <SFormLabel>Name</SFormLabel>
-                        <InputGroup hasValidation>
-                            <SFormControl
-                                required
-                                type="text"
-                                name="name"
-                                id="name"
-                                value={itemData.name}
-                                onChange={handleInputChange}
-                            />
-                            <FormControl.Feedback tooltip>Must not be empty</FormControl.Feedback>
-                        </InputGroup>
-                        <SFormLabel>Type</SFormLabel>
-                        <InputGroup hasValidation>
-                            <SFormControl
-                                required
-                                type="text"
-                                name="type"
-                                id="type"
-                                value={itemData.type}
-                                onChange={handleInputChange}
-                            />
-                        </InputGroup>
-                        <SFormLabel>Notes</SFormLabel>
-                        <InputGroup className="flex-grow-1">
-                            <NotesInputTextArea
-                                className="form-control"
-                                as="textarea"
-                                name="notes"
-                                id="notes"
-                                value={itemData.notes}
-                                onChange={handleInputChange}
-                            />
-                        </InputGroup>
-                    </FormGroup>
-                </div>
-                <div className="row">
-                    <FormGroup >
-                        <SFormLabel>Description</SFormLabel>
-                        <InputGroup >
-                            <DescriptionInputTextArea
-                                className="form-control"
-                                as="textarea"
-                                rows={16}
-                                name="description"
-                                id="description"
-                                value={itemData.description}
-                                onChange={handleInputChange}
-                            />
-                        </InputGroup>
-                    </FormGroup>
-                </div>
-            </StyledForm>
+                    <div className="row">
+                        <FormGroup >
+                            <SFormLabel>Description</SFormLabel>
+                            <InputGroup >
+                                <DescriptionInputTextArea
+                                    className="form-control"
+                                    as="textarea"
+                                    rows={16}
+                                    name="description"
+                                    id="description"
+                                    value={itemData.description}
+                                    onChange={handleInputChange}
+                                />
+                            </InputGroup>
+                        </FormGroup>
+                    </div>
+                </StyledForm>
+            </FormContainer>
             <ModalFooter>
                 <button
                     className="btn btn-link btn-rounded"
@@ -201,14 +216,37 @@ const ItemForm = ({show, onHide, item}) => {
 };
 
 
+const FormContainer = styled.div`
+  background-image: url(${bg});
+  background-size: contain;
+`
+
 
 const InputLabel = styled.label`
-  font-size: 13px;
-  margin: 0;
+  display: block;
+  margin-top: 6px;
+  font-size: 15px;
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  text-align: right;
 `
 const InputField = styled.input`
-  font-size: 13px;
-  margin: 0;
+  font-size: 15px;
+  background-color: transparent;
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  border: 0;
+  
+  :focus {
+    outline:none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    background-color: transparent;
+  }
+  
+  
 `
 
 const NotesInputTextArea = styled.div`
@@ -240,7 +278,7 @@ const StyledImage = styled(Image)`
 `
 
 const StyledForm = styled(Form)`
-    margin: 20px;
+  margin: 20px;
 `
 
 export default ItemForm;

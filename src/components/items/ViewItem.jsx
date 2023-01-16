@@ -1,21 +1,21 @@
 import styled from "styled-components";
 import {getImageFromItem} from "../../data/testdata";
-import {Container, Image, Modal, ModalHeader} from "react-bootstrap";
+import {Container, Image, Modal, ModalDialog, ModalHeader} from "react-bootstrap";
+import bg from '../../assets/journal.webp';
 
 const ViewItem = ({show, onHide, item}) => {
 
     const logo = getImageFromItem(item)
     
     return (
-        <Modal
+        <SModal
             show={show}
             onHide={onHide}
             size="lg"
         >
-            <StyledModalHeader>
-                <h3 className="mb-0 fw-bold flex-grow-1">View Item</h3>
-            </StyledModalHeader>
-            {item && (<Container>
+            <SModalDialog>
+                <BackgroundContainer>
+            {item && (<ViewDetailsContainer>
                 <div className="row mt-3">
                     <div className="col-4">
                         <StyledImageContainer>
@@ -53,10 +53,66 @@ const ViewItem = ({show, onHide, item}) => {
                         </AttributeContainer>
                     </div>
                 </div>
-            </Container> )}
-        </Modal>
+            </ViewDetailsContainer> )}
+                    </BackgroundContainer>
+            </SModalDialog>
+        </SModal>
     );
 };
+
+const SModal = styled(Modal)`
+  .modal-content {
+    width: 694px;
+    height: 917px;
+    background: rgba(0,0,0,0);
+    border: 0
+  }
+`
+
+const BackgroundContainer = styled.div`
+  background-image: url(${bg});
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+`
+
+const SModalDialog = styled(ModalDialog)`
+  margin: auto;
+
+
+`
+
+const ViewDetailsContainer = styled(Container)`
+  font-family: 'Kurale', serif;
+  padding: 24px 60px 60px 60px;
+  width: 100%;
+  height: 100%;
+  
+  
+  h2 {
+    position: relative;
+    color:#5d180d;
+    border-bottom: none;
+    font-family: 'Kurale', serif;
+
+    text-shadow: 2px 0 0 var(--border-color),
+    -2px 0 0 var(--border-color),
+    0 2px 0 var(--border-color),
+      0 -2px 0 var(--border-color),
+    1px 1px var(--border-color),
+      -1px -1px 0 var(--border-color),
+      1px -1px 0 var(--border-color),
+    -1px 1px 0 var(--border-color);
+  }
+  
+  p {
+    position: relative;
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
+`
+
 
 const AttributeContainer = styled.div`
     display: flex;

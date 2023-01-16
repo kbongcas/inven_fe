@@ -1,29 +1,20 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Kurale&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+
+
+html, body{
     margin: 0;
     padding: 0;
+    height: 100vh;
 }
+
 
 :root {
-    --primaryPurple: #646ff0;
-    --black-1: #646681;
-    --black-2: #585858;
-    --bg-1: #f8f8ff;
-    --bg-2: #ecedf6;
-    --bg-3: #cccdde;
-    --gray-1: #eee;
-    --gray-2: #dedfe1;
-    --black: black;
-    --white: white;
+    --bg-1: #F2F5EA;
+    --bg-1-1: #EEF2E3;
+    --bg-2: #2C363F;
+    --bg-3: #D6DBD2;
+    --text-header: #590D1F;
+    --text-main: #0F151A;
+    --text-muted: #413b51ff;
 }
-
-body {
-    font-family: 'Poppins', sans-serif;
-    width: 100%;
-    min-height: 100vh;
-    background-color: var(--bg-1);
-}
-* {
-    font-family: 'Poppins', sans-serif;
-}
-
-
