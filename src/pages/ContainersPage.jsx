@@ -5,25 +5,62 @@ import ContainerForm from "../components/containers/ContainerForm";
 import ContainersContainer from "../components/containers/ContianersContainer";
 import ItemsContainerTable from "../components/containers/ItemsContainerTable";
 import AddItemSearchBar from "../components/containers/AddItemSearchBar";
-import MoveItemSearchBar from "../components/containers/MoveItemSearchBar";
 import PageContainer from "../components/shared/Container/PageContainer";
 import SButton from "../components/shared/Button/SButton";
-
+import {useDispatch, useSelector} from "react-redux";
+import {showItemsInContainer} from "../slices/appSlice";
 
 
 const ContainersPage = () => {
 
     const [createContainerModalShow, setCreateContainerModalShow] = useState(false);
-    const [addItemInContainerModalShow, setAddItemInContainerModalShow ] = useState(false);
-    const [showItemsInContainer, setShowItemsInContainer] = useState(false);
-    const [selectedContainer, setSelectedContainer] = useState(null);
 
+    const [addItemInContainerModalShow, setAddItemInContainerModalShow] = useState({
+        showModal: false,
+        container: null
+    });
+    const { containerPage } = useSelector( (state) => state.app)
+    const dispatch = useDispatch();
+
+    const setShowItemsInContainer = (show, container) => {
+        if(show){
+            dispatch(showItemsInContainer({
+                showItemsInContainer: true,
+                currentContainerShowing: container
+            }))
+        }
+        else{
+            dispatch(showItemsInContainer({
+                showItemsInContainer: false,
+                currentContainerShowing: null
+            }))
+        }
+    }
+
+    const setAddItemInContainer = (show, container) => {
+        console.log(show)
+        console.log(container)
+        if(show){
+            setAddItemInContainerModalShow({
+                showModal: true,
+                container: container
+            })
+        }
+        else{
+            setAddItemInContainerModalShow({
+                    showModal: false,
+                    container: null,
+                })
+        }
+        console.log('state', addItemInContainerModalShow.showModal)
+    }
+    
     return (
         <PageContainer>
             <Container className="my-5">
                 <HeaderContainer>
                     <NavigationContainer>
-                        { showItemsInContainer && 
+                        { containerPage.showItemsInContainer && 
                             <SButton 
                                 onClick={() => setShowItemsInContainer(false)}> 
                                 {'<'}
@@ -31,13 +68,13 @@ const ContainersPage = () => {
                         }
                     </NavigationContainer>
                     <ActionsContainer>
-                        { showItemsInContainer &&  
+                        { containerPage.showItemsInContainer &&  
                             <SButton 
-                                onClick={() => setAddItemInContainerModalShow(true)} >
+                                onClick={() => setAddItemInContainer(true, containerPage.currentContainerShowing)} >
                                 Add Item
                             </SButton>
                         }
-                        { !showItemsInContainer &&
+                        { !containerPage.showItemsInContainer &&
                             <SButton
                                 onClick={() => setCreateContainerModalShow(true)}>
                                 Create
@@ -46,9 +83,9 @@ const ContainersPage = () => {
                     </ActionsContainer>
                 </HeaderContainer>
                 <ContentContainer>
-                    { showItemsInContainer ?
-                        <ItemsContainerTable container={selectedContainer}/> :
-                        <ContainersContainer setShowItemsInContainer={setShowItemsInContainer} setSelectedContainer={setSelectedContainer}/>
+                    { containerPage.showItemsInContainer ?
+                        <ItemsContainerTable container={containerPage.currentContainerShowing}/> :
+                        <ContainersContainer />
                     }
                 </ContentContainer>
             </Container>
@@ -56,11 +93,11 @@ const ContainersPage = () => {
                 show={createContainerModalShow} 
                 onHide={() => setCreateContainerModalShow(false)}
             />
-            <AddItemSearchBar  
-                show={addItemInContainerModalShow} 
-                hide={() => setAddItemInContainerModalShow(false)} 
-                container={selectedContainer}
-            />
+            { addItemInContainerModalShow &&  <AddItemSearchBar  
+                show={addItemInContainerModalShow.showModal} 
+                hide={() => setAddItemInContainer(false)} 
+                container={addItemInContainerModalShow.container}
+            />}
         </PageContainer>
     );
 };
@@ -84,11 +121,6 @@ const NavigationContainer = styled.div`
 const ContentContainer = styled.div`
   overflow: hidden;
   border-radius: 10px;
-`
-
-const ContainerPageContainer = styled.div`
-  background-color: var(--bg-1);
-  width: 100%;
 `
 
 export default ContainersPage;

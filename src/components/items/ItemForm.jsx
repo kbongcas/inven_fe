@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {ImageData} from "../../data/testdata";
 import {Form, FormControl, FormGroup, Image, InputGroup, Modal} from "react-bootstrap";
@@ -36,7 +36,14 @@ const ItemForm = ({show, onHide, item}) => {
         description: item ? item.description : initialState.description,
     })
 
+
+    useEffect(() => {
+
+    }, [item])
+
     const dispatch = useDispatch();
+    
+    
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -100,7 +107,7 @@ const ItemForm = ({show, onHide, item}) => {
                                 <FormControl className="form-control-sm" type="file" />
                             </StyledImageContainer>
                             <div className="form-group row">
-                                <InputLabel className="col-sm-2 form-label" for="weight">Weight:</InputLabel>
+                                <InputLabel className="col-sm-2 form-label" htmlFor="weight">Weight:</InputLabel>
                                 <div className="col-sm-10">
                                     <InputField
                                         type="text"
@@ -113,7 +120,7 @@ const ItemForm = ({show, onHide, item}) => {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <InputLabel className="col-sm-2 form-label" for="cost">Cost:</InputLabel>
+                                <InputLabel className="col-sm-2 form-label" htmlFor="cost">Cost:</InputLabel>
                                 <div className="col-sm-10">
                                     <InputField
                                         type="text"

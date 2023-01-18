@@ -7,19 +7,18 @@ import {useState} from "react";
 import {deleteItemFromContainer} from "../../slices/itemsInContainerSlice";
 import MoveItemSearchBar from "./MoveItemSearchBar";
 import ItemInContainerForm from "./ItemInContainerForm";
+import ItemMainDetails from "../items/ItemMainDetails";
+import ParagraphText from "../shared/Text/ParagraphText";
 
-const ItemsContainerTableRow = ({container, item, setViewItemModalShow, setSelectedItem}) => {
+const ItemsContainerTableRow = ({containerId, item, setViewItem, setUpdateItem, setMoveItem}) => {
 
     const logo = getImageFromItem(item)
-    const [updateItemModalShow, setUpdateItemModalShow] = useState(false);
-    const [moveItemModalShow, setMoveItemModalShow] = useState(false);
-
     const dispatch = useDispatch();
 
     const handleDeleteItem = () => {
         dispatch(deleteItemFromContainer({
             itemId:  item.id,
-            containerId: container.id
+            containerId: containerId
         }))
     }
 
@@ -27,70 +26,87 @@ const ItemsContainerTableRow = ({container, item, setViewItemModalShow, setSelec
         <>
             <tr
                 onDoubleClick={() => {
-                    setSelectedItem(item)
-                    setViewItemModalShow(true);
-
+                    setViewItem(true, item)
                 }}
             >
-                <td>
-                    <div className="d-flex align-items-center">
-                        <StyledImage
-                            src={logo}
-                            alt=""
-                            className="img-responsive rounded-circle"
-                        />
-                        <div className="ms-3">
-                            <div className='d-flex'>
-                                <p className="fw-bold mb-auto">{item.name}</p>
-                                <ItemCount
-                                    className="text-muted mb-auto">{item.count > 1 ? `x ${item.count}` : ''}</ItemCount>
-                            </div>
-                            <ItemType className="text-muted mb-auto">{item.type}</ItemType>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <p className="mb-0">{item.cost}</p>
-                </td>
-                <td>
-                    <p className="mb-0">{item.weight}</p>
-                </td>
-                <td>
-                    <p className="mb-0">{item.notes}</p>
-                </td>
-                <td>
-                    <BiEdit className="text-muted" onClick={() => setUpdateItemModalShow(true)}/>
-                    <BiTrash className="text-muted" onClick={handleDeleteItem}/>
-                    <BiTransfer className="text-muted" onClick={() => setMoveItemModalShow(true)}/>
-                </td>
+                <MainDetailsTableCell>
+                    <ItemMainDetails item={item} logo={logo} />
+                </MainDetailsTableCell>
+                <SecondaryDetailsTableCell>
+                    <Cost>
+                        {item.cost ? item.cost: "---"}
+                    </Cost>
+                    <Weight>
+                        {item.weight ? item.weight : "---"}
+                    </Weight>
+                </SecondaryDetailsTableCell>
+                <NotesTableCell>
+                    <ParagraphText lineLimit={2}>
+                        {item.notes ? item.notes : "---" }
+                    </ParagraphText>
+                </NotesTableCell>
+                <ActionsTableCell>
+                    <Actions>
+                        <BiEdit className="text-muted" onClick={() => setUpdateItem(true, item)}/>
+                        <BiTrash className="text-muted" onClick={handleDeleteItem}/>
+                        <BiTransfer className="text-muted" onClick={() => setMoveItem(true, item)}/>
+                    </Actions>
+                </ActionsTableCell>
             </tr>
-            <MoveItemSearchBar
-                show={moveItemModalShow}
-                hide={() => setMoveItemModalShow(false)}
-                item={item}
-                container={container}
-            />
-            <ItemInContainerForm 
-                show={updateItemModalShow} 
-                onHide={() => setUpdateItemModalShow(false)}
-                item={item}
-            />
         </>
     )
 }
 
-
-const StyledImage = styled(Image)`
-  width: 40px;
-  height: 40px;
+const MainDetailsTableCell = styled.td`
+  vertical-align: middle;
+  position: relative;
+  width: 325px;
+`
+const SecondaryDetailsTableCell = styled.td`
+  vertical-align: middle;
+  position: relative;
+  width: 75px;
+`
+const Cost = styled.div`
+  color: var(--text-main);
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  font-size: 12px;
+  
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
 `
 
-const ItemCount = styled.p`
-  padding-left: 5px;
-  font-size: 13px;
+const Weight = styled.div`
+  font-family: 'EB Garamond', serif;
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 12px;
+  text-align: left;
+
+  position: relative;
+  bottom: 3px;
+  margin: 0;
+  padding: 0;
 `
-const ItemType = styled.p`
+
+const NotesTableCell= styled.td`
+  vertical-align: middle;
+  width: 150px;
+`
+
+const ActionsTableCell= styled.td`
+  width: 50px;
+`
+
+const Actions = styled.div`
   font-size: 15px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: auto;
 `
 
 export default ItemsContainerTableRow;

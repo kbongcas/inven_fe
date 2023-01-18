@@ -3,12 +3,16 @@ import {InputGroup, Form, ListGroup} from "react-bootstrap";
 import {AiOutlineSearch} from "react-icons/ai";
 import styled from "styled-components";
 
-const SearchBar = () => {
+const SearchBar = ({searchInput, searchPlaceholder, handleFilter}) => {
     return (
         <SearchContainer>
             <SInputGroup>
                 <SFormControl
                     type="text"
+                    value={searchInput}
+                    placeholder={searchPlaceholder}
+                    onChange={handleFilter}
+                    autoFocus
                 />
                 <TextInputGroup>
                     <AiOutlineSearch />

@@ -1,14 +1,17 @@
 ﻿import React, {useEffect, useState} from 'react';
 import {
-    Image,
+    Container,
+    Image, ModalFooter,
 } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {moveItemInContainer} from "../../slices/itemsInContainerSlice";
 import {getAllContainers} from "../../slices/containersSlice";
 import SearchModal from "../shared/Modal/SearchModal";
 import {searchFilter} from "../../utils/searchFilter";
-import ModalSearchResult from "../shared/Modal/ModalSearchResult";
+import ModalSearchResult from "../shared/Form/SearchResult";
+import TableContainer from "../shared/Container/TableContainer";
+import ContainerMainDetails from "./ContainerMainDetails";
 
 const MoveItemSearchBar = ({show, hide, item}) => {
 
@@ -57,7 +60,7 @@ const MoveItemSearchBar = ({show, hide, item}) => {
         )
     }
 
-    const FilteredContainerRow = ({container}) =>
+    const FilteredContainerRow = ({container, index} ) =>
     {
         const logo = ImageData.default;
 
@@ -65,19 +68,12 @@ const MoveItemSearchBar = ({show, hide, item}) => {
             <ModalSearchResult
                 onClick={() => handleFilteredContainersClicked(container.id)}
             >
-                <div className="row">
-                    <ImageContainer className="col-sm-1">
-                        <StyledImage
-                            src={logo}
-                            alt=""
-                            className="img-responsive rounded-circle"
-                        />
-                    </ImageContainer>
-                    <div className="col-sm">
-                        <ItemName className="fw-bold mb-auto">{container.name}</ItemName>
-                        <ItemType className="text-muted mb-auto">{container.description}</ItemType>
-                    </div>
-                </div>
+
+                <SContainer
+                    index={index}
+                >
+                    <ContainerMainDetails container={container} logo={logo} />
+                </SContainer>
             </ModalSearchResult>
         )
     }
@@ -93,35 +89,26 @@ const MoveItemSearchBar = ({show, hide, item}) => {
             handleFilter={handleFilter}
         >
             { showFilteredDropdown
-                &&  filteredContainers.map( (container, i) => <FilteredContainerRow container={container} key={i}/>
+                &&  filteredContainers.map( (container, i) => <FilteredContainerRow container={container} index={i} key={i}/>
                 )
             }
         </SearchModal>
     )
 };
 
+const SContainer = styled.div`
+  display: flex; 
+  flex-direction: row;
+  
+  border-width: 2px;
+  margin: 0;
 
-const StyledImage = styled(Image)`
-  width: 30px;
-  height: 30px;
-  margin-top: 8px;
-`
-const ImageContainer = styled.div`
-    margin-right: 10px;
-`
-
-const ItemType = styled.p`
-  font-size: 15px;
-  height: 50%;
-`
-
-const ItemName= styled.p`
-  width: 300px;
   overflow: hidden;
   white-space: nowrap;
-  word-break: break-word;
   text-overflow: ellipsis;
+  height: 100%;
 `
+
 
 
 export default MoveItemSearchBar;

@@ -27,7 +27,7 @@ const ItemInContainerForm = ({show, onHide, item}) => {
 
         if(item){
             //update
-            dispatch((updateItemInContainer(itemData)))
+            dispatch(updateItemInContainer(itemData))
         }
         onHide()
     }

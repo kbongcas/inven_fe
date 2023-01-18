@@ -9,7 +9,7 @@ import styled from "styled-components";
 import {getImageFromItem} from "../../data/testdata";
 import {addItemIntoContainer} from "../../slices/itemsInContainerSlice";
 import SearchModal from "../shared/Modal/SearchModal";
-import ModalSearchResult from "../shared/Modal/ModalSearchResult";
+import ModalSearchResult from "../shared/Form/SearchResult";
 import {searchFilter} from "../../utils/searchFilter";
 
 const AddItemSearchBar = ({show, hide, container}) => {
